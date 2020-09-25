@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.rolekbartlomiej.weather_android.presentation.splash.SplashFragment"
+        tools:layout="@layout/fragment_splash"
+        android:label="SplashFragment" >
+
+        <action
+            android:id="@+id/actionSplashToHello"
+            app:destination="@id/helloFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/splashFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/helloFragment"
+        android:name="com.rolekbartlomiej.weather_android.presentation.hello.HelloFragment"
+        tools:layout="@layout/fragment_hello"
+        android:label="HelloFragment" />
+
+</navigation>
