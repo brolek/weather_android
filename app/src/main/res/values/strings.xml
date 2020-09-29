@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">weather_android</string>
+    <string name="hello">Witaj!</string>
+    <string name="wind">Wiatr</string>
+    <string name="humidity">Wilgotność</string>
+    <string name="pressure">Ciśnienie</string>
 </resources>

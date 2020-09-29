@@ -3,6 +3,7 @@ package com.rolekbartlomiej.weather_android.presentation.hello
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.os.Build
@@ -16,10 +17,14 @@ import com.rolekbartlomiej.weather_android.domain.service.data.ActualWeather
 import com.rolekbartlomiej.weather_android.utils.EnableGpsLocationUtil
 import com.rolekbartlomiej.weather_android.utils.isPermissionGranted
 import kotlinx.coroutines.launch
+import java.io.IOException
+import java.util.*
+import kotlin.collections.ArrayList
 
 class HelloViewModel(private val repository: AppRepository) : ViewModel() {
     internal val weatherData = MutableLiveData<ActualWeather>()
     internal val permissionsToRequest = MutableLiveData<List<String>>()
+    internal val currentCityName = MutableLiveData<String>()
 
     internal fun searchCity(searchTxt: String) {
         viewModelScope.launch {
@@ -65,7 +70,7 @@ class HelloViewModel(private val repository: AppRepository) : ViewModel() {
             val client = LocationServices.getFusedLocationProviderClient(activity)
             client.lastLocation.addOnSuccessListener { location ->
                 if (location != null) {
-                    onLocationRetrieved(location)
+                    onLocationRetrieved(activity, location)
                 } else {
                     requestLastLocation(client, activity)
                 }
@@ -83,7 +88,7 @@ class HelloViewModel(private val repository: AppRepository) : ViewModel() {
             override fun onLocationResult(locationResult: LocationResult) {
                 for (location in locationResult.locations) {
                     if (location != null) {
-                        onLocationRetrieved(location)
+                        onLocationRetrieved(activity, location)
                         client.removeLocationUpdates(this)
                     }
                 }
@@ -94,8 +99,19 @@ class HelloViewModel(private val repository: AppRepository) : ViewModel() {
         }
     }
 
-    private fun onLocationRetrieved(location: Location) {
+    private fun onLocationRetrieved(activity: Activity, location: Location) {
         getWeatherForCoords(location)
+        getCurrentCityName(activity, location)
+    }
+
+    private fun getCurrentCityName(context: Context, location: Location) {
+        try {
+            val addresses = Geocoder(context, Locale.getDefault())
+                .getFromLocation(location.latitude, location.longitude, 1)
+            currentCityName.postValue(addresses[0].locality)
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 
     private fun getWeatherForCoords(location: Location) {

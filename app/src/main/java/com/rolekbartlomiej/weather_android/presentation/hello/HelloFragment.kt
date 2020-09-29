@@ -3,12 +3,15 @@ package com.rolekbartlomiej.weather_android.presentation.hello
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.rolekbartlomiej.weather_android.R
 import com.rolekbartlomiej.weather_android.databinding.FragmentHelloBinding
+import com.rolekbartlomiej.weather_android.domain.service.data.ActualWeather
 import com.rolekbartlomiej.weather_android.utils.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -22,10 +25,6 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
     private val viewModel: HelloViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        binding.cityTxt.textChanges().debounce(500).collectIn(lifecycleScope) {
-//            viewModel.searchCity(it.toString())
-//        }
-
         observeViewModelValues()
     }
 
@@ -36,11 +35,31 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
 
     private fun observeViewModelValues() {
         viewModel.weatherData.observe(viewLifecycleOwner) {
-            binding.helloLbl.text = it.toString()
+            setViewData(it)
         }
 
         viewModel.permissionsToRequest.observe(viewLifecycleOwner) {
             requestPermissions(it.toTypedArray(), REQUEST_CODE_ASK_LOCATION_PERMS)
+        }
+
+        viewModel.currentCityName.observe(viewLifecycleOwner) {
+            binding.cityNameLbl.text = it
+        }
+    }
+
+    private fun setViewData(weather: ActualWeather) {
+        with(binding) {
+            val uri =
+                Uri.parse("https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png")
+            Glide.with(requireActivity()).load(uri).into(weatherIcon)
+            currentTempLbl.text = "${weather.main.temp.toInt()}°"
+            currentWeatherDescLbl.text = weather.weather[0].description
+            windValueLbl.text = "${weather.wind.speed.toInt()}m/s"
+            humidityValueLbl.text = "${weather.main.humidity}%"
+            pressureValueLbl.text = "${weather.main.pressure}hPa"
+            cloudsLbl.text = "Zachmurzenie: ${weather.clouds.all}%"
+            maxTempLbl.text = "${weather.main.temp_max.toInt()}°"
+            minTempLbl.text = "${weather.main.temp_min.toInt()}°"
         }
     }
 
