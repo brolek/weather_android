@@ -16,15 +16,19 @@ import com.rolekbartlomiej.weather_android.domain.AppRepository
 import com.rolekbartlomiej.weather_android.domain.service.data.ActualWeather
 import com.rolekbartlomiej.weather_android.utils.EnableGpsLocationUtil
 import com.rolekbartlomiej.weather_android.utils.isPermissionGranted
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 
+@ExperimentalCoroutinesApi
 class HelloViewModel(private val repository: AppRepository) : ViewModel() {
     internal val weatherData = MutableLiveData<ActualWeather>()
     internal val permissionsToRequest = MutableLiveData<List<String>>()
     internal val currentCityName = MutableLiveData<String>()
+    internal val isLoading = MutableStateFlow(true)
 
     internal fun searchCity(searchTxt: String) {
         viewModelScope.launch {
@@ -117,6 +121,7 @@ class HelloViewModel(private val repository: AppRepository) : ViewModel() {
     private fun getWeatherForCoords(location: Location) {
         viewModelScope.launch {
             weatherData.value = repository.getWeatherByCoords(location.latitude, location.longitude)
+            isLoading.value = false
         }
     }
 
