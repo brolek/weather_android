@@ -1,7 +1,16 @@
 <resources>
-    <string name="app_name">weather_android</string>
+    <string name="app_name">Weatherly</string>
+
     <string name="hello">Witaj!</string>
     <string name="wind">Wiatr</string>
     <string name="humidity">Wilgotność</string>
     <string name="pressure">Ciśnienie</string>
+
+    <string name="temp_value">%1$d°</string>
+    <string name="wind_speed_value">%1$dm/s</string>
+    <string name="humidity_value">%1$d%%</string>
+    <string name="pressure_value">%1$dhPa</string>
+    <string name="clouds_value">Zachmurzenie: %1$d%%</string>
+    <string name="temp_max_value">%1$d°</string>
+    <string name="temp_min_value">%1$d°</string>
 </resources>

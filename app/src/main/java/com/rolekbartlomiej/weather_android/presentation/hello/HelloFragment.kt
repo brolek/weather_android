@@ -55,17 +55,17 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
 
     private fun setViewData(weather: ActualWeather) {
         with(binding) {
-            val uri =
-                Uri.parse("https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png")
+            val uri = Uri.parse(Helpers.getImageUrl(weather.weather[0].icon))
             Glide.with(requireActivity()).load(uri).into(weatherIcon)
-            currentTempLbl.text = "${weather.main.temp.toInt()}°"
+            val main = weather.main
+            currentTempLbl.text = getString(R.string.temp_value, main.temp.toInt())
             currentWeatherDescLbl.text = weather.weather[0].description
-            windValueLbl.text = "${weather.wind.speed.toInt()}m/s"
-            humidityValueLbl.text = "${weather.main.humidity}%"
-            pressureValueLbl.text = "${weather.main.pressure}hPa"
-            cloudsLbl.text = "Zachmurzenie: ${weather.clouds.all}%"
-            maxTempLbl.text = "${weather.main.temp_max.toInt()}°"
-            minTempLbl.text = "${weather.main.temp_min.toInt()}°"
+            windValueLbl.text = getString(R.string.wind_speed_value, weather.wind.speed.toInt())
+            humidityValueLbl.text = getString(R.string.humidity_value, main.humidity)
+            pressureValueLbl.text = getString(R.string.pressure_value, main.pressure)
+            cloudsLbl.text = getString(R.string.clouds_value, weather.clouds.all)
+            maxTempLbl.text = getString(R.string.temp_max_value, main.temp_max.toInt())
+            minTempLbl.text = getString(R.string.temp_min_value, main.temp_min.toInt())
         }
     }
 
