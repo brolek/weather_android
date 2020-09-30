@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -95,11 +94,10 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
     }
 
     private fun showLocationRequiredDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle("lokalizacja")
-            .setMessage("potrzeba lokalizacji")
-            .setPositiveButton("ok") { _, _ -> }
-            .show()
+        DialogHelper.showOkDialog(
+            requireContext(), getString(R.string.location_permission),
+            getString(R.string.location_permission_desc)
+        )
     }
 
     companion object {

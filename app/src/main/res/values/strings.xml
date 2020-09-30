@@ -13,4 +13,8 @@
     <string name="clouds_value">Zachmurzenie: %1$d%%</string>
     <string name="temp_max_value">%1$d°</string>
     <string name="temp_min_value">%1$d°</string>
+
+    <string name="location_permission">Lokalizacja GPS</string>
+    <string name="location_permission_desc">Lokalizacja urządzenia jest wymagana do poprawnego działania aplikacji.</string>
+    <string name="ok">OK</string>
 </resources>
