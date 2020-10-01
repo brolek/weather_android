@@ -65,6 +65,9 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
             cloudsLbl.text = getString(R.string.clouds_value, main.clouds)
             maxTempLbl.text = getString(R.string.temp_max_value, weather.daily[0].temp.max.toInt())
             minTempLbl.text = getString(R.string.temp_min_value, weather.daily[0].temp.min.toInt())
+            feelsLikeWeatherLbl.text = getString(R.string.feels_like_temp, main.feels_like.toInt())
+            sunriseValueLbl.text = DateHelper.toHour(main.sunrise)
+            sunsetValueLbl.text = DateHelper.toHour(main.sunset)
         }
     }
 

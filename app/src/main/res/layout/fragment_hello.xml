@@ -98,12 +98,21 @@
                     android:id="@+id/currentWeatherDescLbl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
                     android:textColor="@color/colorOnPrimary"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/weatherIcon"
                     app:layout_constraintTop_toBottomOf="@+id/cloudsLbl" />
+
+                <TextView
+                    android:id="@+id/feelsLikeWeatherLbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:textColor="@color/colorOnPrimary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/weatherIcon"
+                    app:layout_constraintTop_toBottomOf="@+id/currentWeatherDescLbl" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -188,6 +197,68 @@
                     app:layout_constraintEnd_toEndOf="@+id/pressureLbl"
                     app:layout_constraintStart_toStartOf="@+id/pressureLbl"
                     app:layout_constraintTop_toBottomOf="@+id/pressureLbl" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/sunCardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:cardBackgroundColor="@color/colorOnPrimary"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/secondaryCardView">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/sunriseLbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sunrise"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.1"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/sunriseValueLbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/sunriseLbl"
+                    app:layout_constraintStart_toStartOf="@+id/sunriseLbl"
+                    app:layout_constraintTop_toBottomOf="@+id/sunriseLbl" />
+
+                <TextView
+                    android:id="@+id/sunsetLbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sunset"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.9"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/sunsetValueLbl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/sunsetLbl"
+                    app:layout_constraintStart_toStartOf="@+id/sunsetLbl"
+                    app:layout_constraintTop_toBottomOf="@+id/sunsetLbl" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>

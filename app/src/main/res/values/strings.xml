@@ -13,6 +13,9 @@
     <string name="clouds_value">Zachmurzenie: %1$d%%</string>
     <string name="temp_max_value">%1$d°</string>
     <string name="temp_min_value">%1$d°</string>
+    <string name="feels_like_temp">Temp. odczuwalna: %1$d°</string>
+    <string name="sunrise">Wschód słońca</string>
+    <string name="sunset">Zachód słońca</string>
 
     <string name="location_permission">Lokalizacja GPS</string>
     <string name="location_permission_desc">Lokalizacja urządzenia jest wymagana do poprawnego działania aplikacji.</string>
