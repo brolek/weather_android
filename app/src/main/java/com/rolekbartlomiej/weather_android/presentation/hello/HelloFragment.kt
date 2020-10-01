@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.rolekbartlomiej.weather_android.R
 import com.rolekbartlomiej.weather_android.databinding.FragmentHelloBinding
-import com.rolekbartlomiej.weather_android.domain.service.data.ActualWeather
+import com.rolekbartlomiej.weather_android.domain.service.data.all.AllWeather
 import com.rolekbartlomiej.weather_android.utils.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -52,19 +52,19 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
         }
     }
 
-    private fun setViewData(weather: ActualWeather) {
+    private fun setViewData(weather: AllWeather) {
         with(binding) {
-            val uri = Uri.parse(Helpers.getImageUrl(weather.weather[0].icon))
+            val main = weather.current
+            val uri = Uri.parse(Helpers.getImageUrl(main.weather[0].icon))
             Glide.with(requireActivity()).load(uri).into(weatherIcon)
-            val main = weather.main
             currentTempLbl.text = getString(R.string.temp_value, main.temp.toInt())
-            currentWeatherDescLbl.text = weather.weather[0].description
-            windValueLbl.text = getString(R.string.wind_speed_value, weather.wind.speed.toInt())
+            currentWeatherDescLbl.text = main.weather[0].description
+            windValueLbl.text = getString(R.string.wind_speed_value, main.wind_speed.toInt())
             humidityValueLbl.text = getString(R.string.humidity_value, main.humidity)
             pressureValueLbl.text = getString(R.string.pressure_value, main.pressure)
-            cloudsLbl.text = getString(R.string.clouds_value, weather.clouds.all)
-            maxTempLbl.text = getString(R.string.temp_max_value, main.temp_max.toInt())
-            minTempLbl.text = getString(R.string.temp_min_value, main.temp_min.toInt())
+            cloudsLbl.text = getString(R.string.clouds_value, main.clouds)
+            maxTempLbl.text = getString(R.string.temp_max_value, weather.daily[0].temp.max.toInt())
+            minTempLbl.text = getString(R.string.temp_min_value, weather.daily[0].temp.min.toInt())
         }
     }
 

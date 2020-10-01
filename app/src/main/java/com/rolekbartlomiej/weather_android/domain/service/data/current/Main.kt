@@ -1,4 +1,4 @@
-package com.rolekbartlomiej.weather_android.domain.service.data
+package com.rolekbartlomiej.weather_android.domain.service.data.current
 
 data class Main(
     val humidity: Int,
