@@ -9,26 +9,23 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.Looper
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.*
 import com.rolekbartlomiej.weather_android.domain.AppRepository
 import com.rolekbartlomiej.weather_android.domain.service.data.all.AllWeather
 import com.rolekbartlomiej.weather_android.utils.EnableGpsLocationUtil
+import com.rolekbartlomiej.weather_android.utils.StatefulViewModel
 import com.rolekbartlomiej.weather_android.utils.isPermissionGranted
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 
 @ExperimentalCoroutinesApi
-class HelloViewModel(private val repository: AppRepository) : ViewModel() {
+class HelloViewModel(private val repository: AppRepository) : StatefulViewModel(repository) {
     internal val weatherData = MutableLiveData<AllWeather>()
     internal val permissionsToRequest = MutableLiveData<List<String>>()
     internal val currentCityName = MutableLiveData<String>()
-    internal val isLoading = MutableStateFlow(true)
 
     internal fun searchCity(searchTxt: String) {
         viewModelScope.launch {
@@ -37,6 +34,8 @@ class HelloViewModel(private val repository: AppRepository) : ViewModel() {
     }
 
     internal fun requestUserLocation(activity: Activity) {
+        showNoInternetInfo.value = false
+        isLoading.value = true
         if (checkIfGpsEnabled(activity)) {
             getUserLastLocation(activity)
         } else {
@@ -113,15 +112,20 @@ class HelloViewModel(private val repository: AppRepository) : ViewModel() {
             val addresses = Geocoder(context, Locale.getDefault())
                 .getFromLocation(location.latitude, location.longitude, 1)
             currentCityName.postValue(addresses[0].locality)
-        } catch (e: IOException) {
-            e.printStackTrace()
+        } catch (e: Error) {
+            onError(e)
         }
     }
 
     private fun getWeatherForCoords(location: Location) {
         viewModelScope.launch {
-            weatherData.value = repository.getAllWeatherByLocation(location.latitude, location.longitude)
-            isLoading.value = false
+            try {
+                weatherData.value =
+                    repository.getAllWeatherByLocation(location.latitude, location.longitude)
+                isLoading.value = false
+            } catch (e: Error) {
+                onError(e)
+            }
         }
     }
 

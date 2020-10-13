@@ -27,11 +27,16 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         observeViewModelValues()
+        setOnClickListeners()
     }
 
     override fun onStart() {
-        viewModel.requestUserLocation(requireActivity())
+        requestData()
         super.onStart()
+    }
+
+    private fun requestData() {
+        viewModel.requestUserLocation(requireActivity())
     }
 
     private fun observeViewModelValues() {
@@ -49,6 +54,16 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
 
         viewModel.isLoading.collectIn(lifecycleScope) {
             binding.loaderView.root.isVisible = it
+        }
+
+        viewModel.showNoInternetInfo.collectIn(lifecycleScope) {
+            binding.noInternetView.root.isVisible = it
+        }
+    }
+
+    private fun setOnClickListeners() {
+        binding.noInternetView.tryAgainBtn.setOnClickListener {
+            requestData()
         }
     }
 
