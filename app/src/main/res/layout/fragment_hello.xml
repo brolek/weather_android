@@ -268,4 +268,9 @@
     <include
         android:id="@+id/loaderView"
         layout="@layout/view_loader" />
+
+    <include
+        android:id="@+id/noInternetView"
+        layout="@layout/view_no_internet"
+        android:visibility="gone" />
 </FrameLayout>
