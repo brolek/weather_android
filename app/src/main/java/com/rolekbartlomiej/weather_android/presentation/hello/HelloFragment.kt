@@ -83,6 +83,7 @@ class HelloFragment : Fragment(R.layout.fragment_hello) {
             feelsLikeWeatherLbl.text = getString(R.string.feels_like_temp, main.feels_like.toInt())
             sunriseValueLbl.text = DateHelper.toHour(main.sunrise)
             sunsetValueLbl.text = DateHelper.toHour(main.sunset)
+            hourlyTempChart.setData(weather.hourly)
         }
     }
 
